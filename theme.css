@@ -1,0 +1,289 @@
+/* ============================================
+   COURT EDGE — theme.css
+   Color system, tokens, and visual identity
+   ============================================ */
+
+:root {
+  /* Core palette */
+  --accent:          #FF6B00;
+  --accent-dim:      rgba(255, 107, 0, 0.15);
+  --accent-glow:     rgba(255, 107, 0, 0.35);
+
+  /* Backgrounds */
+  --bg-base:         #080A0F;
+  --bg-dark:         #0D1018;
+  --bg-card:         #111520;
+  --bg-footer:       #060810;
+
+  /* Text */
+  --text-primary:    #F0F2F7;
+  --text-secondary:  #9BA3B8;
+  --text-muted:      #5A6178;
+
+  /* Borders */
+  --border:          rgba(255, 255, 255, 0.08);
+  --border-strong:   rgba(255, 255, 255, 0.15);
+
+  /* Status */
+  --green:           #22C55E;
+  --red:             #EF4444;
+  --blue:            #3B82F6;
+  --yellow:          #EAB308;
+}
+
+/* ---- SELECTION ---- */
+
+::selection {
+  background: var(--accent-dim);
+  color: var(--text-primary);
+}
+
+/* ---- SCROLLBAR ---- */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ---- WIN/LOSS INDICATORS ---- */
+
+.win  { color: var(--green); }
+.loss { color: var(--red); }
+.push { color: var(--yellow); }
+
+/* ---- BADGES ---- */
+
+.badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+}
+
+.badge-green  { background: rgba(34, 197, 94, 0.15);  color: #4ade80; }
+.badge-red    { background: rgba(239, 68, 68, 0.15);   color: #f87171; }
+.badge-orange { background: rgba(255, 107, 0, 0.15);   color: var(--accent); }
+.badge-blue   { background: rgba(59, 130, 246, 0.15);  color: #60a5fa; }
+.badge-gray   { background: rgba(255, 255, 255, 0.06); color: var(--text-muted); }
+
+/* ---- TABLE STYLES ---- */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.data-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.data-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.data-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-primary);
+}
+
+.data-table td:first-child,
+.data-table th:first-child {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+/* ---- CARD VARIANTS ---- */
+
+.card-highlight {
+  border-left: 3px solid var(--accent) !important;
+}
+
+.card-metric {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.card-metric .metric-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.card-metric .metric-value {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 2.5rem;
+  letter-spacing: 0.02em;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.card-metric .metric-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ---- TABS ---- */
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.75rem 1.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  margin-bottom: -1px;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- FORMS ---- */
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+}
+
+.form-control {
+  width: 100%;
+  background: var(--bg-base);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  padding: 0.65rem 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: border-color 0.2s;
+  appearance: none;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.form-control option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* ---- ODDS DISPLAY ---- */
+
+.odds-positive { color: var(--green); font-family: 'DM Mono', monospace; font-weight: 500; }
+.odds-negative { color: var(--red);   font-family: 'DM Mono', monospace; font-weight: 500; }
+.odds-even     { color: var(--text-primary); font-family: 'DM Mono', monospace; }
+
+/* ---- TOOLTIP ---- */
+
+.tooltip-wrap { position: relative; display: inline-block; }
+
+.tooltip-wrap .tooltip-text {
+  visibility: hidden;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.tooltip-wrap:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ---- PAGE TRANSITIONS ---- */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeUp 0.45s ease forwards;
+}
+
+/* Stagger children */
+.fade-in-group > * {
+  opacity: 0;
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.fade-in-group > *:nth-child(1) { animation-delay: 0.05s; }
+.fade-in-group > *:nth-child(2) { animation-delay: 0.10s; }
+.fade-in-group > *:nth-child(3) { animation-delay: 0.15s; }
+.fade-in-group > *:nth-child(4) { animation-delay: 0.20s; }
+.fade-in-group > *:nth-child(5) { animation-delay: 0.25s; }
+.fade-in-group > *:nth-child(6) { animation-delay: 0.30s; }
+.fade-in-group > *:nth-child(7) { animation-delay: 0.35s; }
+.fade-in-group > *:nth-child(8) { animation-delay: 0.40s; }
