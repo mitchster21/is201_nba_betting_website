@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bet Tracker App | Court Edge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================
+       BET TRACKER — Single-page app
+       All styles, HTML, and JS in one file.
+       ============================================ */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent:       #FF6B00;
+      --accent-dim:   rgba(255,107,0,0.15);
+      --bg-base:      #080A0F;
+      --bg-dark:      #0D1018;
+      --bg-card:      #111520;
+      --bg-footer:    #060810;
+      --text-primary: #F0F2F7;
+      --text-secondary:#9BA3B8;
+      --text-muted:   #5A6178;
+      --border:       rgba(255,255,255,0.08);
+      --border-strong:rgba(255,255,255,0.15);
+      --green:        #22C55E;
+      --red:          #EF4444;
+      --yellow:       #EAB308;
+      --blue:         #3B82F6;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-base);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    /* APP HEADER */
+    .app-header {
+      background: var(--bg-dark);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .app-logo {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .app-logo span { color: var(--accent); }
+
+    .app-nav-links { display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap; }
+    .app-nav-links a {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .app-nav-links a:hover { color: var(--text-primary); }
+
+    /* MAIN LAYOUT */
+    .app-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* SUMMARY METRICS */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .metric-value {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 2.2rem;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .metric-value.positive { color: var(--green); }
+    .metric-value.negative { color: var(--red); }
+
+    .metric-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      margin-top: 0.2rem;
+    }
+
+    /* TWO-PANEL LAYOUT */
+    .app-panels {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 860px) { .app-panels { grid-template-columns: 1fr; } }
+
+    /* FORM PANEL */
+    .form-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 1rem;
+    }
+
+    .panel-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+      color: var(--text-primary);
+    }
+
+    .form-row { margin-bottom: 1rem; }
+    .form-row.two { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    .form-row label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-row input,
+    .form-row select {
+      width: 100%;
+      background: var(--bg-base);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      padding: 0.6rem 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus {
+      border-color: var(--accent);
+    }
+
+    .form-row select option {
+      background: var(--bg-card);
+    }
+
+    .btn-add {
+      width: 100%;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-add:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(255,107,0,0.3);
+    }
+
+    /* TABS */
+    .log-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.25rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.6rem 1.25rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-btn:hover:not(.active) { color: var(--text-primary); }
+
+    .btn-clear {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-clear:hover { color: var(--red); border-color: var(--red); }
+
+    /* BET LIST */
+    .bet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .bet-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .bet-item.win  { border-left: 3px solid var(--green); }
+    .bet-item.loss { border-left: 3px solid var(--red); }
+    .bet-item.push { border-left: 3px solid var(--yellow); }
+    .bet-item.pending { border-left: 3px solid var(--blue); }
+
+    .bet-matchup {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .bet-details {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: 'DM Mono', monospace;
+      margin-top: 0.25rem;
+    }
+
+    .bet-details span { white-space: nowrap; }
+
+    .bet-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
+
+    .bet-pnl {
+      font-family: 'DM Mono', monospace;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .pnl-win  { color: var(--green); }
+    .pnl-loss { color: var(--red); }
+    .pnl-push { color: var(--yellow); }
+    .pnl-pending { color: var(--blue); }
+
+    .bet-actions { display: flex; gap: 0.4rem; }
+
+    .btn-status, .btn-delete {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-status:hover { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+    .btn-delete:hover { background: rgba(239,68,68,0.1); color: var(--red); border-color: var(--red); }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    /* ODDS CALCULATOR */
+    .calc-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .calc-output {
+      background: var(--bg-base);
+      border-radius: 6px;
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .calc-result-item .label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .calc-result-item .val {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* CHART AREA */
+    .chart-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .chart-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+      margin-bottom: 1.25rem;
+    }
+
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .bar-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      width: 110px;
+      flex-shrink: 0;
+      text-align: right;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 24px;
+      background: var(--bg-base);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #000;
+      font-family: 'DM Mono', monospace;
+      transition: width 0.6s ease;
+    }
+
+    .bar-fill.win-bar  { background: var(--green); }
+    .bar-fill.loss-bar { background: var(--red); color: #fff; }
+
+    /* TOOLTIP for status cycle */
+    .status-badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+    }
+
+    .badge-win     { background: rgba(34,197,94,0.15);  color: #4ade80; }
+    .badge-loss    { background: rgba(239,68,68,0.15);  color: #f87171; }
+    .badge-push    { background: rgba(234,179,8,0.15);  color: #facc15; }
+    .badge-pending { background: rgba(59,130,246,0.15); color: #60a5fa; }
+
+    /* Footer */
+    .app-footer {
+      text-align: center;
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 3rem;
+    }
+
+    .app-footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <header class="app-header">
+    <a href="../index.html" class="app-logo">COURT<span>EDGE</span></a>
+    <nav class="app-nav-links">
+      <a href="../index.html">← Home</a>
+      <a href="../standings.html">Standings</a>
+      <a href="../scratch.html">Scratch</a>
+    </nav>
+  </header>
+
+  <main class="app-main">
+
+    <!-- METRICS -->
+    <div class="metrics-row" id="metricsRow">
+      <!-- JS rendered -->
+    </div>
+
+    <!-- PANELS -->
+    <div class="app-panels">
+
+      <!-- FORM -->
+      <div class="form-panel">
+        <div class="panel-title">Log a Bet</div>
+
+        <div class="form-row">
+          <label>Matchup</label>
+          <input type="text" id="inputMatchup" placeholder="e.g. OKC vs MEM" />
+        </div>
+        <div class="form-row">
+          <label>Pick / Bet Type</label>
+          <input type="text" id="inputPick" placeholder="e.g. OKC -5.5, Over 218.5" />
+        </div>
+        <div class="form-row two">
+          <div>
+            <label>Odds (American)</label>
+            <input type="number" id="inputOdds" placeholder="-110" />
+          </div>
+          <div>
+            <label>Wager ($)</label>
+            <input type="number" id="inputWager" placeholder="50" />
+          </div>
+        </div>
+        <div class="form-row two">
+          <div>
+            <label>Sport / League</label>
+            <select id="inputLeague">
+              <option value="NBA Playoffs">NBA Playoffs</option>
+              <option value="NBA Regular">NBA Regular</option>
+              <option value="NFL">NFL</option>
+              <option value="MLB">MLB</option>
+              <option value="NHL">NHL</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Date</label>
+            <input type="date" id="inputDate" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Notes (optional)</label>
+          <input type="text" id="inputNotes" placeholder="e.g. line movement, injury news" />
+        </div>
+        <button class="btn-add" id="btnAdd">+ Add Bet</button>
+
+        <!-- ODDS CALCULATOR -->
+        <div style="margin-top:2rem">
+          <div class="panel-title" style="font-size:1.1rem">Odds Calculator</div>
+          <div class="calc-grid">
+            <div class="form-row" style="margin:0">
+              <label>American Odds</label>
+              <input type="number" id="calcOdds" placeholder="-110" />
+            </div>
+            <div class="form-row" style="margin:0">
+              <label>Wager ($)</label>
+              <input type="number" id="calcWager" placeholder="100" />
+            </div>
+          </div>
+          <div class="calc-output" id="calcOutput">
+            <div class="calc-result-item">
+              <div class="label">Implied Prob</div>
+              <div class="val" id="calcImpl">—</div>
+            </div>
+            <div class="calc-result-item">
+              <div class="label">Decimal Odds</div>
+              <div class="val" id="calcDec">—</div>
+            </div>
+            <div class="calc-result-item">
+              <div class="label">To Win</div>
+              <div class="val" id="calcWin">—</div>
+            </div>
+            <div class="calc-result-item">
+              <div class="label">Payout</div>
+              <div class="val" id="calcPayout">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BET LOG -->
+      <div>
+        <div class="log-panel-header">
+          <div class="tabs" style="border:none;margin:0">
+            <button class="tab-btn active" data-tab="all">All</button>
+            <button class="tab-btn" data-tab="pending">Pending</button>
+            <button class="tab-btn" data-tab="settled">Settled</button>
+          </div>
+          <button class="btn-clear" id="btnClear">Clear All</button>
+        </div>
+
+        <div class="bet-list" id="betList">
+          <!-- JS rendered -->
+        </div>
+
+        <!-- P/L CHART -->
+        <div class="chart-section" id="chartSection" style="display:none">
+          <div class="chart-title">P/L by Sport</div>
+          <div class="bar-chart" id="barChart"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    CourtEdge Bet Tracker · For entertainment purposes only · <a href="../index.html">← Back to CourtEdge</a>
+  </footer>
+
+  <script>
+    // ============================================
+    // BET TRACKER — Full App Logic
+    // ============================================
+
+    const STORAGE_KEY = 'courtedge_bets_v2';
+
+    let bets = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    let activeTab = 'all';
+
+    // ---- SAVE / LOAD ----
+    function save() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bets));
+    }
+
+    // ---- ODDS UTILS ----
+    function americanToDecimal(odds) {
+      odds = parseFloat(odds);
+      if (isNaN(odds)) return null;
+      return odds > 0 ? (1 + odds / 100) : (1 + 100 / Math.abs(odds));
+    }
+
+    function americanToImplied(odds) {
+      odds = parseFloat(odds);
+      if (isNaN(odds)) return null;
+      return odds > 0
+        ? (100 / (odds + 100) * 100)
+        : (Math.abs(odds) / (Math.abs(odds) + 100) * 100);
+    }
+
+    function calcToWin(odds, wager) {
+      odds = parseFloat(odds); wager = parseFloat(wager);
+      if (isNaN(odds) || isNaN(wager)) return null;
+      return odds > 0 ? (wager * odds / 100) : (wager * 100 / Math.abs(odds));
+    }
+
+    // ---- CALCULATOR ----
+    function updateCalc() {
+      const odds = document.getElementById('calcOdds').value;
+      const wager = document.getElementById('calcWager').value;
+      const impl  = americanToImplied(odds);
+      const dec   = americanToDecimal(odds);
+      const win   = calcToWin(odds, wager);
+
+      document.getElementById('calcImpl').textContent   = impl  != null ? impl.toFixed(1) + '%' : '—';
+      document.getElementById('calcDec').textContent    = dec   != null ? dec.toFixed(3) : '—';
+      document.getElementById('calcWin').textContent    = win   != null ? '$' + win.toFixed(2) : '—';
+      document.getElementById('calcPayout').textContent = (win != null && wager)
+        ? '$' + (win + parseFloat(wager)).toFixed(2) : '—';
+    }
+
+    document.getElementById('calcOdds').addEventListener('input', updateCalc);
+    document.getElementById('calcWager').addEventListener('input', updateCalc);
+
+    // ---- ADD BET ----
+    document.getElementById('btnAdd').addEventListener('click', () => {
+      const matchup = document.getElementById('inputMatchup').value.trim();
+      const pick    = document.getElementById('inputPick').value.trim();
+      const odds    = document.getElementById('inputOdds').value.trim();
+      const wager   = document.getElementById('inputWager').value.trim();
+      const league  = document.getElementById('inputLeague').value;
+      const date    = document.getElementById('inputDate').value;
+      const notes   = document.getElementById('inputNotes').value.trim();
+
+      if (!matchup || !pick || !odds || !wager) {
+        alert('Please fill in Matchup, Pick, Odds, and Wager.');
+        return;
+      }
+
+      const toWin = calcToWin(parseFloat(odds), parseFloat(wager));
+
+      bets.unshift({
+        id: Date.now(),
+        matchup, pick, odds: parseFloat(odds),
+        wager: parseFloat(wager),
+        toWin: toWin != null ? parseFloat(toWin.toFixed(2)) : 0,
+        league, date, notes,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+      });
+
+      save();
+      renderAll();
+
+      // Clear inputs
+      ['inputMatchup','inputPick','inputOdds','inputWager','inputNotes'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+    });
+
+    // ---- STATUS CYCLE ----
+    function cycleStatus(id) {
+      const cycle = ['pending','win','loss','push'];
+      const bet = bets.find(b => b.id === id);
+      if (!bet) return;
+      const idx = cycle.indexOf(bet.status);
+      bet.status = cycle[(idx + 1) % cycle.length];
+      save();
+      renderAll();
+    }
+
+    // ---- DELETE ----
+    function deleteBet(id) {
+      bets = bets.filter(b => b.id !== id);
+      save();
+      renderAll();
+    }
+
+    // ---- CLEAR ALL ----
+    document.getElementById('btnClear').addEventListener('click', () => {
+      if (bets.length === 0) return;
+      if (confirm('Clear all bets? This cannot be undone.')) {
+        bets = [];
+        save();
+        renderAll();
+      }
+    });
+
+    // ---- TABS ----
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeTab = btn.dataset.tab;
+        renderBetList();
+      });
+    });
+
+    // ---- P/L DISPLAY ----
+    function pnlForBet(bet) {
+      if (bet.status === 'win')  return bet.toWin;
+      if (bet.status === 'loss') return -bet.wager;
+      if (bet.status === 'push') return 0;
+      return null;
+    }
+
+    // ---- RENDER METRICS ----
+    function renderMetrics() {
+      const settled = bets.filter(b => b.status !== 'pending');
+      const wins    = bets.filter(b => b.status === 'win').length;
+      const losses  = bets.filter(b => b.status === 'loss').length;
+      const pnl     = settled.reduce((sum, b) => sum + (pnlForBet(b) || 0), 0);
+      const wagered = bets.reduce((sum, b) => sum + b.wager, 0);
+      const pct     = settled.length > 0 ? (wins / settled.length * 100) : 0;
+
+      const row = document.getElementById('metricsRow');
+      row.innerHTML = `
+        <div class="metric-card">
+          <div class="metric-label">Total Bets</div>
+          <div class="metric-value">${bets.length}</div>
+          <div class="metric-sub">${bets.filter(b=>b.status==='pending').length} pending</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Win Rate</div>
+          <div class="metric-value">${settled.length > 0 ? pct.toFixed(0) : '—'}${settled.length > 0 ? '%' : ''}</div>
+          <div class="metric-sub">${wins}W – ${losses}L</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Net P/L</div>
+          <div class="metric-value ${pnl >= 0 ? 'positive' : 'negative'}">
+            ${pnl >= 0 ? '+' : ''}$${Math.abs(pnl).toFixed(0)}
+          </div>
+          <div class="metric-sub">on $${wagered.toFixed(0)} wagered</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">ROI</div>
+          <div class="metric-value ${pnl >= 0 ? 'positive' : 'negative'}">
+            ${wagered > 0 ? (pnl >= 0 ? '+' : '') + (pnl / wagered * 100).toFixed(1) + '%' : '—'}
+          </div>
+          <div class="metric-sub">return on investment</div>
+        </div>
+      `;
+    }
+
+    // ---- RENDER BET LIST ----
+    function renderBetList() {
+      const list = document.getElementById('betList');
+      let filtered = bets;
+
+      if (activeTab === 'pending')  filtered = bets.filter(b => b.status === 'pending');
+      if (activeTab === 'settled')  filtered = bets.filter(b => b.status !== 'pending');
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🏀</div>
+            <p>${activeTab === 'all' ? 'No bets logged yet. Add your first bet!' : 'No bets in this category.'}</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map(bet => {
+        const pnl = pnlForBet(bet);
+        const pnlStr = pnl != null
+          ? `<span class="bet-pnl pnl-${bet.status}">${pnl >= 0 ? '+' : ''}$${Math.abs(pnl).toFixed(2)}</span>`
+          : `<span class="bet-pnl pnl-pending">To Win: +$${bet.toWin.toFixed(2)}</span>`;
+
+        const statusBadge = `<span class="status-badge badge-${bet.status}">${bet.status}</span>`;
+
+        const oddsStr = bet.odds > 0 ? `+${bet.odds}` : `${bet.odds}`;
+        const dateStr = bet.date || '—';
+
+        return `
+          <div class="bet-item ${bet.status}">
+            <div>
+              <div class="bet-matchup">${bet.matchup}</div>
+              <div style="font-size:0.87rem;color:var(--text-secondary);margin-bottom:0.25rem">${bet.pick}</div>
+              <div class="bet-details">
+                <span>${bet.league}</span>
+                <span>${oddsStr}</span>
+                <span>$${bet.wager} wager</span>
+                <span>${dateStr}</span>
+                ${bet.notes ? `<span style="color:var(--text-muted);font-style:italic">${bet.notes}</span>` : ''}
+              </div>
+            </div>
+            <div class="bet-right">
+              ${pnlStr}
+              ${statusBadge}
+              <div class="bet-actions">
+                <button class="btn-status" onclick="cycleStatus(${bet.id})">Update</button>
+                <button class="btn-delete" onclick="deleteBet(${bet.id})">✕</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ---- RENDER CHART ----
+    function renderChart() {
+      const settled = bets.filter(b => b.status !== 'pending');
+      if (settled.length === 0) {
+        document.getElementById('chartSection').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('chartSection').style.display = 'block';
+
+      const byLeague = {};
+      settled.forEach(b => {
+        if (!byLeague[b.league]) byLeague[b.league] = 0;
+        byLeague[b.league] += (pnlForBet(b) || 0);
+      });
+
+      const maxAbs = Math.max(...Object.values(byLeague).map(Math.abs), 1);
+
+      document.getElementById('barChart').innerHTML = Object.entries(byLeague)
+        .sort((a, b) => b[1] - a[1])
+        .map(([league, pnl]) => {
+          const pct = Math.abs(pnl) / maxAbs * 100;
+          const isPos = pnl >= 0;
+          return `
+            <div class="bar-row">
+              <div class="bar-label">${league}</div>
+              <div class="bar-track">
+                <div class="bar-fill ${isPos ? 'win-bar' : 'loss-bar'}" style="width:${pct.toFixed(1)}%">
+                  ${isPos ? '+' : ''}$${Math.abs(pnl).toFixed(0)}
+                </div>
+              </div>
+            </div>
+          `;
+        }).join('');
+    }
+
+    // ---- RENDER ALL ----
+    function renderAll() {
+      renderMetrics();
+      renderBetList();
+      renderChart();
+    }
+
+    // ---- INIT ----
+    // Set today's date default
+    const todayInput = document.getElementById('inputDate');
+    todayInput.value = new Date().toISOString().split('T')[0];
+
+    // Seed with sample data if empty
+    if (bets.length === 0) {
+      bets = [
+        { id: 1, matchup: 'OKC vs MEM', pick: 'OKC -8.5', odds: -115, wager: 50, toWin: 43.48, league: 'NBA Playoffs', date: '2025-04-19', notes: 'Home opener, OKC dominant', status: 'win', createdAt: new Date().toISOString() },
+        { id: 2, matchup: 'CLE vs MIA', pick: 'Over 211.5', odds: -110, wager: 30, toWin: 27.27, league: 'NBA Playoffs', date: '2025-04-19', notes: '', status: 'loss', createdAt: new Date().toISOString() },
+        { id: 3, matchup: 'BOS vs CHI', pick: 'BOS ML', odds: -350, wager: 70, toWin: 20.00, league: 'NBA Playoffs', date: '2025-04-20', notes: 'Boston should cruise', status: 'pending', createdAt: new Date().toISOString() },
+      ];
+      save();
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>

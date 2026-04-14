@@ -1,0 +1,432 @@
+/* ============================================
+   scratch.css — Custom from-scratch stylesheet
+   For scratch.html only. No framework used.
+   ============================================ */
+
+/* ----- RESET ----- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ----- ROOT VARS ----- */
+:root {
+  --orange: #E85D04;
+  --orange-light: #F48C06;
+  --cream: #FFFBF5;
+  --dark: #1A0A00;
+  --dark-mid: #2D1500;
+  --text: #2D1500;
+  --text-muted: #7A5C3A;
+  --border: rgba(45, 21, 0, 0.12);
+}
+
+/* ----- BODY ----- */
+body {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 17px;
+  color: var(--text);
+  background-color: var(--cream);  /* custom background color */
+  line-height: 1.75;
+}
+
+/* ----- SCRATCH NAV ----- */
+.scratch-nav {
+  background: var(--dark);
+  padding: 0.7rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.back-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.back-link:hover {
+  color: #fff;
+}
+
+.back-link.highlight {
+  color: var(--orange-light);
+}
+
+/* ----- HEADER ----- */
+.scratch-header {
+  background-color: var(--dark);
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 30px,
+      rgba(232, 93, 4, 0.04) 30px,
+      rgba(232, 93, 4, 0.04) 31px
+    );
+  color: #fff;
+  padding: 5rem 2rem 4rem;
+  text-align: center;
+}
+
+.header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.header-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--orange-light);
+  margin-bottom: 1rem;
+}
+
+.scratch-header h1 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.scratch-header h1 em {
+  font-style: italic;
+  color: var(--orange-light);
+  font-family: 'Lora', serif;
+}
+
+.header-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 2rem;
+}
+
+.header-jump-links {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.header-jump-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  padding-bottom: 2px;
+}
+
+.header-jump-links a:hover {
+  color: var(--orange-light);
+  border-bottom-color: var(--orange-light);
+}
+
+/* ----- SECTIONS ----- */
+.scratch-section {
+  padding: 5rem 1.5rem;
+}
+
+.dark-section {
+  background-color: #f5ede0;  /* alternate section background */
+}
+
+.scratch-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.scratch-section h2 {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.section-sub {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+/* ----- TWO COLUMN ----- */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .two-col { grid-template-columns: 1fr; }
+}
+
+/* ----- SCRATCH IMAGE ----- */
+.scratch-img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 1.5rem 0 0.25rem;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.img-caption {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ----- FACT BOX (div for positioning & styling) ----- */
+.fact-box {
+  background: #fff;
+  border-left: 4px solid var(--orange);
+  border-radius: 6px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(45, 21, 0, 0.08);
+}
+
+.fact-box h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.1rem;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+/* ----- ORDERED + UNORDERED LISTS ----- */
+.top-list {
+  padding-left: 1.25rem;
+  list-style: decimal;
+  color: var(--text);
+}
+
+.top-list > li {
+  margin-bottom: 1rem;
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+}
+
+.top-list > li > strong {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--dark);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.nested-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.3rem;
+  color: var(--text-muted);
+}
+
+.nested-list li {
+  margin-bottom: 0.15rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ----- PLAYER GRID (div for block positioning) ----- */
+.player-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.player-tile {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.player-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--orange);
+}
+
+.featured-tile {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #fff;
+}
+
+.pos {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+.featured-tile .pos {
+  color: rgba(255,255,255,0.7);
+}
+
+.player-tile-name {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+}
+
+.featured-tile .player-tile-name {
+  color: #fff;
+}
+
+.player-tile-note {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.featured-tile .player-tile-note {
+  color: rgba(255,255,255,0.8);
+}
+
+/* ----- VIDEO DIV (positioning block) ----- */
+.video-div {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.video-div iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border-radius: 10px;
+}
+
+/* ----- TABLEAU DIV ----- */
+.tableau-div {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(45, 21, 0, 0.15);
+  min-height: 500px;
+  background: #fff;
+}
+
+.tableau-fallback-scratch {
+  display: none;
+  padding: 3rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.tableau-fallback-scratch a {
+  color: var(--orange);
+}
+
+/* ----- RESUME DIV (layout block) ----- */
+.resume-div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.resume-block {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+}
+
+.resume-block h3 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  color: var(--orange);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.resume-block p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.resume-block strong {
+  color: var(--dark);
+}
+
+.skill-list {
+  padding-left: 1.1rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  list-style: square;
+}
+
+.skill-list li {
+  margin-bottom: 0.35rem;
+  line-height: 1.5;
+}
+
+/* ----- BACK TO TOP BAR ----- */
+.back-to-top-bar {
+  background: var(--dark-mid);
+  padding: 1rem 2rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.back-to-top {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.back-to-top:hover {
+  color: #fff;
+}
+
+.back-to-top.highlight {
+  color: var(--orange-light);
+}
+
+/* ----- LINK STYLES ----- */
+a {
+  color: var(--orange);
+}
+a:hover {
+  text-decoration: underline;
+}
+
+p + p { margin-top: 0.85rem; }
