@@ -122,9 +122,9 @@
 
   <section class="page-hero">
     <div class="container">
-      <div class="hero-eyebrow">2025 Postseason</div>
+      <div class="hero-eyebrow">2025–26 Postseason</div>
       <h1>Playoff <span style="color:var(--accent)">Standings</span></h1>
-      <p>Full bracket seeding, records, and championship odds</p>
+      <p>Full 2026 first-round bracket · Records, odds, and series data</p>
     </div>
   </section>
 
@@ -139,19 +139,19 @@
           <div class="metric-sub">in the bracket</div>
         </div>
         <div class="card-metric">
-          <div class="metric-label">Top Seed</div>
-          <div class="metric-value">OKC</div>
-          <div class="metric-sub">68–14 West</div>
+          <div class="metric-label">East #1 Seed</div>
+          <div class="metric-value">DET</div>
+          <div class="metric-sub">56–26 Pistons</div>
         </div>
         <div class="card-metric">
-          <div class="metric-label">Favorite</div>
+          <div class="metric-label">West #1 Seed</div>
           <div class="metric-value">OKC</div>
-          <div class="metric-sub">-175 to win title</div>
+          <div class="metric-sub">64–18 Thunder</div>
         </div>
         <div class="card-metric">
-          <div class="metric-label">Best Value</div>
-          <div class="metric-value">BOS</div>
-          <div class="metric-sub">+320 defending champs</div>
+          <div class="metric-label">Title Favorite</div>
+          <div class="metric-value">OKC</div>
+          <div class="metric-sub">-150 to repeat</div>
         </div>
       </div>
 
@@ -261,33 +261,33 @@
   <script src="js/main.js"></script>
   <script>
     const EAST = [
-      { seed:1, name:'Cleveland Cavaliers',  abbr:'CLE', w:64, l:18, last10:'8-2', streak:'W3', odds:'+500'  },
-      { seed:2, name:'Boston Celtics',        abbr:'BOS', w:61, l:21, last10:'7-3', streak:'W1', odds:'+320'  },
-      { seed:3, name:'New York Knicks',       abbr:'NYK', w:51, l:31, last10:'6-4', streak:'L1', odds:'+1100' },
-      { seed:4, name:'Milwaukee Bucks',       abbr:'MIL', w:48, l:34, last10:'5-5', streak:'W2', odds:'+1800' },
-      { seed:5, name:'Indiana Pacers',        abbr:'IND', w:47, l:35, last10:'5-5', streak:'L2', odds:'+2500' },
-      { seed:6, name:'Miami Heat',            abbr:'MIA', w:44, l:38, last10:'4-6', streak:'W1', odds:'+4000' },
-      { seed:7, name:'Chicago Bulls',         abbr:'CHI', w:39, l:43, last10:'5-5', streak:'L1', odds:'+8000' },
-      { seed:8, name:'Orlando Magic',         abbr:'ORL', w:39, l:43, last10:'4-6', streak:'W1', odds:'+8000' },
+      { seed:1, name:'Detroit Pistons',    abbr:'DET', w:56, l:26, last10:'8-2', streak:'W2', odds:'+400'  },
+      { seed:2, name:'Boston Celtics',      abbr:'BOS', w:55, l:27, last10:'7-3', streak:'W3', odds:'+280'  },
+      { seed:3, name:'New York Knicks',     abbr:'NYK', w:53, l:29, last10:'7-3', streak:'L1', odds:'+1100' },
+      { seed:4, name:'Cleveland Cavaliers', abbr:'CLE', w:52, l:30, last10:'6-4', streak:'W1', odds:'+1400' },
+      { seed:5, name:'Toronto Raptors',     abbr:'TOR', w:46, l:36, last10:'5-5', streak:'W2', odds:'+3000' },
+      { seed:6, name:'Atlanta Hawks',       abbr:'ATL', w:46, l:36, last10:'5-5', streak:'W1', odds:'+3500' },
+      { seed:7, name:'TBD (Play-In E7)',    abbr:'E7',  w:null, l:null, last10:'—', streak:'—', odds:'+6000' },
+      { seed:8, name:'TBD (Play-In E8)',    abbr:'E8',  w:null, l:null, last10:'—', streak:'—', odds:'+8000' },
     ];
 
     const WEST = [
-      { seed:1, name:'Oklahoma City Thunder', abbr:'OKC', w:68, l:14, last10:'9-1', streak:'W5', odds:'-175'  },
-      { seed:2, name:'Houston Rockets',       abbr:'HOU', w:52, l:30, last10:'7-3', streak:'W2', odds:'+900'  },
-      { seed:3, name:'Los Angeles Lakers',    abbr:'LAL', w:50, l:32, last10:'6-4', streak:'L1', odds:'+1200' },
-      { seed:4, name:'Golden State Warriors', abbr:'GSW', w:48, l:34, last10:'5-5', streak:'W1', odds:'+1600' },
-      { seed:5, name:'Denver Nuggets',        abbr:'DEN', w:45, l:37, last10:'5-5', streak:'L3', odds:'+2200' },
-      { seed:6, name:'Memphis Grizzlies',     abbr:'MEM', w:41, l:41, last10:'4-6', streak:'L2', odds:'+5000' },
-      { seed:7, name:'Los Angeles Clippers',  abbr:'LAC', w:38, l:44, last10:'4-6', streak:'W2', odds:'+7500' },
-      { seed:8, name:'Minnesota Timberwolves',abbr:'MIN', w:36, l:46, last10:'3-7', streak:'L1', odds:'+9000' },
+      { seed:1, name:'OKC Thunder',               abbr:'OKC', w:64, l:18, last10:'9-1', streak:'W4', odds:'-150'  },
+      { seed:2, name:'San Antonio Spurs',          abbr:'SAS', w:61, l:21, last10:'7-3', streak:'W2', odds:'+500'  },
+      { seed:3, name:'Denver Nuggets',             abbr:'DEN', w:54, l:28, last10:'6-4', streak:'L1', odds:'+900'  },
+      { seed:4, name:'Los Angeles Lakers',         abbr:'LAL', w:53, l:29, last10:'5-5', streak:'W1', odds:'+1200' },
+      { seed:5, name:'Houston Rockets',            abbr:'HOU', w:52, l:30, last10:'6-4', streak:'W2', odds:'+1500' },
+      { seed:6, name:'Minnesota Timberwolves',     abbr:'MIN', w:49, l:33, last10:'4-6', streak:'L2', odds:'+2200' },
+      { seed:7, name:'TBD (Play-In W7)',           abbr:'W7',  w:null, l:null, last10:'—', streak:'—', odds:'+6000' },
+      { seed:8, name:'TBD (Play-In W8)',           abbr:'W8',  w:null, l:null, last10:'—', streak:'—', odds:'+8000' },
     ];
 
     function renderConf(data, tbodyId) {
       const top = data[0];
       const tbody = document.getElementById(tbodyId);
       data.forEach((team, i) => {
-        const pct = (team.w / (team.w + team.l)).toFixed(3);
-        const gb = i === 0 ? '—' : (((top.w - team.w) + (team.l - top.l)) / 2).toFixed(1);
+        const pct = (team.w != null) ? (team.w / (team.w + team.l)).toFixed(3) : '—';
+        const gb = (i === 0 || team.w == null) ? '—' : (((top.w - team.w) + (team.l - top.l)) / 2).toFixed(1);
         const streakClass = team.streak.startsWith('W') ? 'streak-w' : 'streak-l';
         const oddsClass = team.odds.startsWith('-') ? 'odds-negative' : 'odds-positive';
 
